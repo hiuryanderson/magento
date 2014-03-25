@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+
+<config>
+  <modules>
+    <ESprinter_Shipping>
+      <version>0.0.1</version>
+    </ESprinter_Shipping>
+  </modules>
+
+  <global>
+    <models>
+      <esprinter_shipping>
+        <class>ESprinter_Shipping_Model</class>
+      </esprinter_shipping>
+    </models>
+
+    <helpers>
+      <esprinter>
+        <class>ESprinter_Shipping_Helper</class>
+      </esprinter>
+    </helpers>
+
+    <resources>
+      <esprinter_setup>
+        <setup>
+          <module>ESprinter_Shipping</module>
+          <class>ESprinter_Shipping_Model_Resource_Setup</class>
+        </setup>
+      </esprinter_setup>
+    </resources>
+
+    <sales>
+      <quote>
+        <item>
+          <product_attributes>
+            <volume_altura />
+            <volume_largura />
+            <volume_comprimento />
+          </product_attributes>
+        </item>
+      </quote>
+    </sales>
+  </global>
+
+  <adminhtml>
+    <translate>
+      <modules>
+        <ESprinter_Shipping>
+          <files>
+            <default>ESprinter_Shipping.csv</default>
+          </files>
+        </ESprinter_Shipping>
+      </modules>
+    </translate>
+  </adminhtml>
+
+  <frontend>
+    <translate>
+      <modules>
+        <ESprinter_Shipping>
+          <files>
+            <default>ESprinter_Shipping.csv</default>
+          </files>
+        </ESprinter_Shipping>
+      </modules>
+    </translate>
+  </frontend>
+
+  <default>
+    <carriers>
+      <esprinter>
+        <active>1</active>
+        <model>esprinter_shipping/carrier_esprinter</model>
+        <name>ESprinter</name>
+        <title>ESprinter</title>
+        <notification>1</notification>
+      </esprinter>
+    </carriers>
+  </default>
+
+</config>

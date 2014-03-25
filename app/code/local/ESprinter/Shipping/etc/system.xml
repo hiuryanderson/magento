@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+
+<config>
+  <sections>
+    <carriers>
+      <groups>
+        <esprinter translate="label" module="shipping">
+          <label>E-Sprinter Shipping</label>
+          <frontend_type>text</frontend_type>
+          <sort_order>5</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>1</show_in_store>
+
+          <fields>
+            <active translate="label">
+              <label>Enabled</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>1</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </active>
+
+            <account translate="label">
+              <label>User Account</label>
+              <frontend_type>text</frontend_type>
+              <backend_model>esprinter_shipping/config_useraccount</backend_model>
+              <!--<validate>required-entry</validate>-->
+              <sort_order>2</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </account>
+
+            <!-- Model/Config/Password depends on this tag name + hierarchy -->
+            <password translate="label">
+              <label>Password</label>
+              <frontend_type>text</frontend_type>
+              <backend_model>esprinter_shipping/config_password</backend_model>
+              <!--<validate>required-entry</validate>-->
+              <sort_order>3</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </password>
+
+            <apikey translate="label">
+              <label>API Key</label>
+              <frontend_type>text</frontend_type>
+              <backend_model>esprinter_shipping/config_apikey</backend_model>
+              <validate>required-entry</validate>
+              <sort_order>4</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </apikey>
+
+            <token translate="label">
+              <label>Token</label>
+              <frontend_type>text</frontend_type>
+              <backend_model>esprinter_shipping/config_token</backend_model>
+              <validate>required-entry</validate>
+              <sort_order>5</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </token>
+
+            <zipcode translate="label">
+              <label>Postal Code</label>
+              <frontend_type>text</frontend_type>
+              <!--<validate>validate-zip-international required-entry</validate>-->
+              <validate>required-entry</validate>
+              <sort_order>6</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </zipcode>
+
+           <!--  <category translate="label">
+              <label>Choose the best fitting category for your products</label>
+              <frontend_type>select</frontend_type>
+              <source_model>esprinter_shipping/carrier_category</source_model>
+              <sort_order>7</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </category>-->
+
+           <notification translate="label">
+              <label>Enable dimension check and notifications</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>8</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </notification>
+
+            <!-- <webservice_url translate="label">
+              <label>Axado's webservice url</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>10</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </webservice_url> -->
+          </fields>
+
+        </esprinter>
+      </groups>
+    </carriers>
+  </sections>
+</config>

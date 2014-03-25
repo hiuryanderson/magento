@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>Intelipost</name>
+    <version>1.0.0</version>
+    <stability>stable</stability>
+    <license uri="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License Version 2 (GPLv2) </license>
+    <channel>community</channel>
+    <extends/>
+    <summary>E-Sprinter</summary>
+    <description>Extens&amp;#xE3;o para utilizar o servi&amp;#xE7;o de cota&amp;#xE7;&amp;#xE3;o do intelipost.com.br</description>
+    <notes>-----</notes>
+    <authors><author><name>E-Sprinter</name><user>E-Sprinter</user><email>info@intelipost.com.br</email></author></authors>
+    <date>2014-03-19</date>
+    <time>14:03:13</time>
+    <contents><target name="magelocal"><dir><dir name="Intelipost"><dir name="Shipping"><dir name="Helper"><file name="Data.php" hash="0093ce0e87031e1962241918fd77dc49"/></dir><dir name="Model"><dir name="Carrier"><file name="Category.php" hash="865a64075ee3be1c432ff54ede840c2f"/><file name="Esprinter.php" hash="b6622c376890dc7bb8797d0fb52b77dc"/></dir><dir name="Config"><file name="Apikey.php" hash="1b6bb215b772dc1dd03ff3ed84e1cd52"/><file name="Password.php" hash="bde09f7d8393f7f4d96eba7cb2393a22"/><file name="Token.php" hash="f5f8f8b0d17e9753c5a212d42da318f8"/><file name="Useraccount.php" hash="50ef82f6be346a66b020b837d5775d1f"/></dir><dir name="Resource"><file name="Quote.php" hash="40496649057370831309ca42097a780d"/><file name="Setup.php" hash="9fdaee59e8c12468b727bc0d20f11b03"/><file name="Volume.php" hash="2d58ecd5699cabce2e707db01b3a65d4"/></dir></dir><dir name="etc"><file name="config.xml" hash="13e2ba95ffc3cc5b123bea6cc6b79581"/><file name="system.xml" hash="7e4e4ea7ddb5a4abf9fff1ef51c61118"/></dir><dir name="sql"><dir name="intelipost_setup"><file name="mysql4-install-0.0.1.php" hash="54ffcde1bbd0108b2fea32db4732d2af"/></dir></dir></dir></dir></dir></target><target name="magelocale"><dir><dir name="pt_BR"><file name="Intelipost_Shipping.csv" hash="ede1863e0cd3ff11c79d76af5c0ed26f"/></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Intelipost_Shipping.xml" hash="8d0ba0e607b620bf4e00ca28576dd9e4"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
+</package>
