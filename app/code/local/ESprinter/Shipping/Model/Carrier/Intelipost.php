@@ -7,16 +7,18 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
     extends Mage_Shipping_Model_Carrier_Abstract
     implements Mage_Shipping_Model_Carrier_Interface
 {
-    protected $_code = 'esprinter';
+    protected $_code = 'intelipost';
+    protected $_api_url = 'https://api.intelipost.com.br/api/v1';
     protected $_helper = null;
 
     private $_zipCodeRegex = '/[0-9]{2}\.?[0-9]{3}-?[0-9]{3}/';
 
-    public function collectRates(Mage_Shipping_Model_Rate_Request $request) {
-        $this->_helper         = Mage::helper('esprinter');
+    public function collectRates(Mage_Shipping_Model_Rate_Request $request)
+    {
+        $this->_helper         = Mage::helper('intelipost');
 
         if (!$this->getConfigFlag('active')) {
-            Mage::log('Intelipost is inactive', null, 'esprinter.log');
+            Mage::log('Intelipost is inactive', null, 'intelipost.log');
             return false;
         }
 
@@ -24,7 +26,7 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
         $destinationZipCode = $request->getDestPostcode();
 
         if (!preg_match($this->_zipCodeRegex, $originZipCode) || !preg_match($this->_zipCodeRegex, $destinationZipCode)) {
-            Mage::log('Invalid zip code ' . $originZipCode . ' or ' . $destinationZipCode, null, 'esprinter.log');
+            Mage::log('Invalid zip code ' . $originZipCode . ' or ' . $destinationZipCode, null, 'intelipost.log');
             return false;
         }
 
@@ -56,10 +58,10 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
         if(!isset($account) || !isset($password) || !isset($api_key) || !isset($token) ||
             !is_string($account) || !is_string($password) || !is_string($api_key) || !is_string($token)
         ){
-            Mage::log('Intelipost not configured', null, 'esprinter.log');
-            Mage::log('account: ' . $account, null, 'esprinter.log');
+            Mage::log('Intelipost not configured', null, 'intelipost.log');
+            Mage::log('account: ' . $account, null, 'intelipost.log');
             // take care to not log the password
-            Mage::log('password length: ' . strlen($password) , null, 'esprinter.log');
+            Mage::log('password length: ' . strlen($password) , null, 'intelipost.log');
             return false;
         }
 
@@ -71,7 +73,7 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
         $quote->destination_zip_code = $destinationZipCode;
 
         if (!$request->getAllItems()) {
-            Mage::log('Cart is empty', null, 'esprinter.log');
+            Mage::log('Cart is empty', null, 'intelipost.log');
             return false;
         }
 
@@ -86,7 +88,7 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
             $volume->volume_type = 'BOX';
 
             if (!$this->isDimensionSet($product)) {
-                Mage::log('Product does not have dimensions set', null, 'esprinter.log');
+                Mage::log('Product does not have dimensions set', null, 'intelipost.log');
 
                 if ($dimension_check) {
                     $this->notifyProductsDimension($item_list);
@@ -106,29 +108,14 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
 
         $body = json_encode($quote);
 
-        $s = curl_init();
-        curl_setopt($s, CURLOPT_TIMEOUT, 5000);
-        curl_setopt($s, CURLOPT_URL, "https://api.intelipost.com.br/api/v1/quote");
-        if ($username != null && $password != null) {
-            curl_setopt($s, CURLOPT_USERPWD, $username . ":" . $password);
-        }
-        curl_setopt($s, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Accept: application/json", "api_key: $api_key", "token: $token"));
-        curl_setopt($s, CURLOPT_POST, true);
-        curl_setopt($s, CURLOPT_ENCODING , "");
-        curl_setopt($s, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($s, CURLOPT_POSTFIELDS, $body);
-        $responseBody = curl_exec($s);
-
-        $response = json_decode($responseBody);
-       // echo $responseBody;
-        curl_close($s);
+        $response = $this->curlRequest($api_key, $body);
 
         $result = Mage::getModel('shipping/rate_result');
 
         foreach ($response->content->delivery_options as $deliveryOption) { 
             $method = Mage::getModel('shipping/rate_result_method'); 
  
-            $method->setCarrier     ('esprinter'); 
+            $method->setCarrier     ('intelipost'); 
             $method->setCarrierTitle('E-Sprinter'); 
             $method->setMethod      ($deliveryOption->description); 
             $method->setMethodTitle ($deliveryOption->description); 
@@ -141,11 +128,13 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
         return $result;
     }
 
-    public function getAllowedMethods() {
+    public function getAllowedMethods()
+    {
         return array($this->_code => $this->getConfigData('name'));
     }
 
-    private function isDimensionSet($product) {
+    private function isDimensionSet($product)
+    {
         $volume_altura      = $product->getData('volume_altura');
         $volume_largura     = $product->getData('volume_largura');
         $volume_comprimento = $product->getData('volume_comprimento');
@@ -160,7 +149,8 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
         return true;
     }
 
-    private function notifyProductsDimension($item_list) {
+    private function notifyProductsDimension($item_list)
+    {
         $notification   = Mage::getSingleton('adminnotification/inbox');
         $message        = $this->_helper->__('The following products do not have dimension set:');
 
@@ -193,7 +183,8 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
         );
     }
 
-    private function formatDeadline($days) {
+    private function formatDeadline($days)
+    {
         if ($days == 0) {
             return $this->_helper->__('(same day)');
         }
@@ -207,5 +198,24 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
         }
 
         return sprintf($this->_helper->__('(%s days)'), $days);
+    }
+
+    private function curlRequest($api_key, $body)
+    {
+        $s = curl_init();
+        curl_setopt($s, CURLOPT_TIMEOUT, 5000);
+        curl_setopt($s, CURLOPT_URL, $this->_api_url."/quote");
+//      if ($this->_username != null && $this->_password != null) {
+//          curl_setopt($s, CURLOPT_USERPWD, $this->_username . ":" . $this->_passwor);
+//      }
+        curl_setopt($s, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Accept: application/json", "api_key: $api_key"));
+        curl_setopt($s, CURLOPT_POST, true);
+        curl_setopt($s, CURLOPT_ENCODING , "");
+        curl_setopt($s, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($s, CURLOPT_POSTFIELDS, $body);
+        $responseBody = curl_exec($s);
+        curl_close($s);
+
+        return json_decode($responseBody);
     }
 }

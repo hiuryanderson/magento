@@ -15,6 +15,11 @@ Up-to-date documentation at: https://docs.intelipost.com.br
 
 Releases
 --------------------
+## 0.8.2
+*2014-04-04 |Pablo del Vecchio*
+
+- Updated API_URL
+
 ## 0.8.1
 *2014-04-04 |Pablo del Vecchio*
 

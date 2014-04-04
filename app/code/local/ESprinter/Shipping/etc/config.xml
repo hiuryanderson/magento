@@ -9,24 +9,24 @@
 
   <global>
     <models>
-      <esprinter_shipping>
+      <intelipost_shipping>
         <class>Intelipost_Shipping_Model</class>
-      </esprinter_shipping>
+      </intelipost_shipping>
     </models>
 
     <helpers>
-      <esprinter>
+      <intelipost>
         <class>Intelipost_Shipping_Helper</class>
-      </esprinter>
+      </intelipost>
     </helpers>
 
     <resources>
-      <esprinter_setup>
+      <intelipost_setup>
         <setup>
           <module>Intelipost_Shipping</module>
           <class>Intelipost_Shipping_Model_Resource_Setup</class>
         </setup>
-      </esprinter_setup>
+      </intelipost_setup>
     </resources>
 
     <sales>
@@ -68,13 +68,13 @@
 
   <default>
     <carriers>
-      <esprinter>
+      <intelipost>
         <active>1</active>
-        <model>esprinter_shipping/carrier_esprinter</model>
+        <model>intelipost_shipping/carrier_intelipost</model>
         <name>Intelipost</name>
         <title>Intelipost</title>
         <notification>1</notification>
-      </esprinter>
+      </intelipost>
     </carriers>
   </default>
 
