@@ -1,6 +1,6 @@
 <?php 
 
-class ESprinter_Shipping_Model_Config_Apikey
+class Intelipost_Shipping_Model_Config_Apikey
   extends Mage_Adminhtml_Model_System_Config_Backend_Encrypted
 {
 

@@ -1,7 +1,7 @@
 <?php
 
 
-class ESprinter_Shipping_Model_Resource_Setup
+class Intelipost_Shipping_Model_Resource_Setup
     extends Mage_Eav_Model_Entity_Setup
 {
     public function getDefaultEntities() {

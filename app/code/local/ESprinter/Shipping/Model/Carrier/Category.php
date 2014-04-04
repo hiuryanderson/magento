@@ -1,6 +1,6 @@
 <?php
 
-class ESprinter_Shipping_Model_Carrier_Category {
+class Intelipost_Shipping_Model_Carrier_Category {
     public function toOptionArray() {
         return array(
             array('value' => '2', 'label' =>  Mage::helper('catalog')->__('Machinery and/or parts')),

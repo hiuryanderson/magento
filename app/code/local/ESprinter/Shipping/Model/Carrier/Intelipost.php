@@ -1,9 +1,9 @@
 <?php
 
-require_once Mage::getBaseDir('code') . '/local/ESprinter/Shipping/Model/Resource/Quote.php';
-require_once Mage::getBaseDir('code') . '/local/ESprinter/Shipping/Model/Resource/Volume.php';
+require_once Mage::getBaseDir('code') . '/local/Intelipost/Shipping/Model/Resource/Quote.php';
+require_once Mage::getBaseDir('code') . '/local/Intelipost/Shipping/Model/Resource/Volume.php';
 
-class ESprinter_Shipping_Model_Carrier_ESprinter
+class Intelipost_Shipping_Model_Carrier_Intelipost
     extends Mage_Shipping_Model_Carrier_Abstract
     implements Mage_Shipping_Model_Carrier_Interface
 {
@@ -16,7 +16,7 @@ class ESprinter_Shipping_Model_Carrier_ESprinter
         $this->_helper         = Mage::helper('esprinter');
 
         if (!$this->getConfigFlag('active')) {
-            Mage::log('ESprinter is inactive', null, 'esprinter.log');
+            Mage::log('Intelipost is inactive', null, 'esprinter.log');
             return false;
         }
 
@@ -56,7 +56,7 @@ class ESprinter_Shipping_Model_Carrier_ESprinter
         if(!isset($account) || !isset($password) || !isset($api_key) || !isset($token) ||
             !is_string($account) || !is_string($password) || !is_string($api_key) || !is_string($token)
         ){
-            Mage::log('ESprinter not configured', null, 'esprinter.log');
+            Mage::log('Intelipost not configured', null, 'esprinter.log');
             Mage::log('account: ' . $account, null, 'esprinter.log');
             // take care to not log the password
             Mage::log('password length: ' . strlen($password) , null, 'esprinter.log');
@@ -66,7 +66,7 @@ class ESprinter_Shipping_Model_Carrier_ESprinter
         $item_list      = Mage::getModel('checkout/cart')->getQuote()->getAllVisibleItems();
         $productsCount  = count($item_list);
 
-        $quote = new ESprinter_Model_Request_Quote();
+        $quote = new Intelipost_Model_Request_Quote();
         $quote->origin_zip_code = $originZipCode;
         $quote->destination_zip_code = $destinationZipCode;
 
@@ -82,7 +82,7 @@ class ESprinter_Shipping_Model_Carrier_ESprinter
         foreach ($item_list as $item) {
             $product = $item->getProduct();
 
-            $volume = new ESprinter_Model_Request_Volume();
+            $volume = new Intelipost_Model_Request_Volume();
             $volume->volume_type = 'BOX';
 
             if (!$this->isDimensionSet($product)) {
@@ -108,7 +108,7 @@ class ESprinter_Shipping_Model_Carrier_ESprinter
 
         $s = curl_init();
         curl_setopt($s, CURLOPT_TIMEOUT, 5000);
-        curl_setopt($s, CURLOPT_URL, "http://api-testing.e-sprinter.com.br/api/v1/quote");
+        curl_setopt($s, CURLOPT_URL, "https://api.intelipost.com.br/api/v1/quote");
         if ($username != null && $password != null) {
             curl_setopt($s, CURLOPT_USERPWD, $username . ":" . $password);
         }
@@ -184,7 +184,7 @@ class ESprinter_Shipping_Model_Carrier_ESprinter
         }
         $message .= '</ul>';
 
-        $message .= $this->_helper->__('<small>Disable these notifications in System > Settings > Carriers > ESprinter</small>');
+        $message .= $this->_helper->__('<small>Disable these notifications in System > Settings > Carriers > Intelipost</small>');
 
         $notification->add(
             Mage_AdminNotification_Model_Inbox::SEVERITY_MINOR,

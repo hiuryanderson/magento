@@ -1,9 +1,9 @@
 <?php 
 
-require_once Mage::getBaseDir('code') . '/local/ESprinter/Shipping/Model/Resource/Quote.php';
-require_once Mage::getBaseDir('code') . '/local/ESprinter/Shipping/Model/Resource/Volume.php';
+require_once Mage::getBaseDir('code') . '/local/Intelipost/Shipping/Model/Resource/Quote.php';
+require_once Mage::getBaseDir('code') . '/local/Intelipost/Shipping/Model/Resource/Volume.php';
 
-class ESprinter_Shipping_Model_Config_Password
+class Intelipost_Shipping_Model_Config_Password
     extends Mage_Adminhtml_Model_System_Config_Backend_Encrypted
 {
 
@@ -14,7 +14,7 @@ class ESprinter_Shipping_Model_Config_Password
         $username = $this->getData('groups/esprinter/fields/account/value');
         $helper = Mage::helper('esprinter');
 
-        $volume = new ESprinter_Model_Request_Volume();
+        $volume = new Intelipost_Model_Request_Volume();
         $volume->weight = 10;
         $volume->volume_type = 'BOX';
         $volume->cost_of_goods = "10";
@@ -22,7 +22,7 @@ class ESprinter_Shipping_Model_Config_Password
         $volume->height = 1;
         $volume->length = 1;
 
-        $quote = new ESprinter_Model_Request_Quote();
+        $quote = new Intelipost_Model_Request_Quote();
         $quote->origin_zip_code = "04037-002";
         $quote->destination_zip_code = "04037-002";
         array_push($quote->volumes, $volume);
@@ -30,7 +30,7 @@ class ESprinter_Shipping_Model_Config_Password
         $body = json_encode($quote);
         $s = curl_init();
         curl_setopt($s, CURLOPT_TIMEOUT, 5000);
-        curl_setopt($s, CURLOPT_URL, "http://api-testing.e-sprinter.com.br/api/v1/quote");
+        curl_setopt($s, CURLOPT_URL, "https://api.intelipost.com.br/api/v1/quote");
         if ($this->username != null && $this->password != null) {
             curl_setopt($s, CURLOPT_USERPWD, $username . ":" . $password);
         }

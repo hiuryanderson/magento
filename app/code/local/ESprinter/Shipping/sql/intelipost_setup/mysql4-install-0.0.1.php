@@ -1,6 +1,6 @@
 <?php
 
-// ESprinter_Shipping_Model_Resource_Setup
+// Intelipost_Shipping_Model_Resource_Setup
 $installer = $this;
 
 $installer->startSetup();

@@ -2,29 +2,29 @@
 
 <config>
   <modules>
-    <ESprinter_Shipping>
+    <Intelipost_Shipping>
       <version>0.0.1</version>
-    </ESprinter_Shipping>
+    </Intelipost_Shipping>
   </modules>
 
   <global>
     <models>
       <esprinter_shipping>
-        <class>ESprinter_Shipping_Model</class>
+        <class>Intelipost_Shipping_Model</class>
       </esprinter_shipping>
     </models>
 
     <helpers>
       <esprinter>
-        <class>ESprinter_Shipping_Helper</class>
+        <class>Intelipost_Shipping_Helper</class>
       </esprinter>
     </helpers>
 
     <resources>
       <esprinter_setup>
         <setup>
-          <module>ESprinter_Shipping</module>
-          <class>ESprinter_Shipping_Model_Resource_Setup</class>
+          <module>Intelipost_Shipping</module>
+          <class>Intelipost_Shipping_Model_Resource_Setup</class>
         </setup>
       </esprinter_setup>
     </resources>
@@ -45,11 +45,11 @@
   <adminhtml>
     <translate>
       <modules>
-        <ESprinter_Shipping>
+        <Intelipost_Shipping>
           <files>
-            <default>ESprinter_Shipping.csv</default>
+            <default>Intelipost_Shipping.csv</default>
           </files>
-        </ESprinter_Shipping>
+        </Intelipost_Shipping>
       </modules>
     </translate>
   </adminhtml>
@@ -57,11 +57,11 @@
   <frontend>
     <translate>
       <modules>
-        <ESprinter_Shipping>
+        <Intelipost_Shipping>
           <files>
-            <default>ESprinter_Shipping.csv</default>
+            <default>Intelipost_Shipping.csv</default>
           </files>
-        </ESprinter_Shipping>
+        </Intelipost_Shipping>
       </modules>
     </translate>
   </frontend>
@@ -71,8 +71,8 @@
       <esprinter>
         <active>1</active>
         <model>esprinter_shipping/carrier_esprinter</model>
-        <name>ESprinter</name>
-        <title>ESprinter</title>
+        <name>Intelipost</name>
+        <title>Intelipost</title>
         <notification>1</notification>
       </esprinter>
     </carriers>

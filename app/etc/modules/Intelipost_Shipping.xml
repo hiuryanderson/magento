@@ -2,13 +2,13 @@
 
 <config>
   <modules>
-    <ESprinter_Shipping>
+    <Intelipost_Shipping>
       <active>true</active>
       <codePool>local</codePool>
       <depends>
         <Mage_Shipping />
       </depends>
-    </ESprinter_Shipping>
+    </Intelipost_Shipping>
   </modules>
   <global>
     <sales>

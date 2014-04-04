@@ -1,4 +1,4 @@
 <?php
 
-class ESprinter_Shipping_Helper_Data
+class Intelipost_Shipping_Helper_Data
     extends Mage_Core_Helper_Abstract {}
