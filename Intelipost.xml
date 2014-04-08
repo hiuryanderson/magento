@@ -1,0 +1,92 @@
+<_>
+   <form_key>bC2ccktCxR7eTKzU</form_key>
+   <name>Intelipost</name>
+   <channel>community</channel>
+   <version_ids>
+      <version_ids>2</version_ids>
+   </version_ids>
+   <summary>Intelipost</summary>
+   <description>Extens&amp;amp;#xE3;o para utilizar o servi&amp;amp;#xE7;o de cota&amp;amp;#xE7;&amp;amp;#xE3;o do intelipost.com.br</description>
+   <license>GNU General Public License Version 2 (GPLv2)</license>
+   <license_uri>http://www.gnu.org/licenses/gpl-2.0.html</license_uri>
+   <version>0.8.4</version>
+   <stability>stable</stability>
+   <notes>. Added quote examples
+. Check for api_url / api_key right combination
+. Added intelipost.log</notes>
+   <authors>
+      <name>
+         <name>Intelipost</name>
+      </name>
+      <user>
+         <user>Intelipost</user>
+      </user>
+      <email>
+         <email>it@intelipost.com.br</email>
+      </email>
+   </authors>
+   <depends_php_min>5.3.0</depends_php_min>
+   <depends_php_max>5.5.0</depends_php_max>
+   <depends>
+      <package>
+         <name>
+            <name/>
+         </name>
+         <channel>
+            <channel/>
+         </channel>
+         <min>
+            <min/>
+         </min>
+         <max>
+            <max/>
+         </max>
+         <files>
+            <files>            </files>
+         </files>
+      </package>
+      <extension>
+         <name>
+            <name>Core</name>
+         </name>
+         <min>
+            <min/>
+         </min>
+         <max>
+            <max/>
+         </max>
+      </extension>
+   </depends>
+   <contents>
+      <target>
+         <target>magelocal</target>
+         <target>magelocal</target>
+         <target>mageetc</target>
+         <target>magelocale</target>
+      </target>
+      <path>
+         <path/>
+         <path>Intelipost</path>
+         <path>modules/Intelipost_Shipping.xml</path>
+         <path>pt_BR/Intelipost_Shipping.csv</path>
+      </path>
+      <type>
+         <type>file</type>
+         <type>dir</type>
+         <type>file</type>
+         <type>file</type>
+      </type>
+      <include>
+         <include/>
+         <include/>
+         <include/>
+         <include/>
+      </include>
+      <ignore>
+         <ignore/>
+         <ignore/>
+         <ignore/>
+         <ignore/>
+      </ignore>
+   </contents>
+</_>
