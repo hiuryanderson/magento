@@ -105,8 +105,8 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
         $request = json_encode($quote);
 
         // INTELIPOST QUOTE
-        $response = $this->intelipostRequest($api_url, $api_key, "/quote", $request);
-
+        $responseBody = $this->intelipostRequest($api_url, $api_key, "/quote", $request);
+        $response = json_decode($responseBody);
         $result = Mage::getModel('shipping/rate_result');
 
         foreach ($response->content->delivery_options as $deliveryOption) { 
@@ -206,7 +206,7 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
 
         if ($days == 101) {
             return $this->_helper->__('(On acknowledgment)');
-        }
+        }rate_result
 
         return sprintf($this->_helper->__('(%s days)'), $days);
     }
