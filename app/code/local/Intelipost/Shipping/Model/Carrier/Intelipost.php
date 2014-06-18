@@ -105,17 +105,18 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
         $request = json_encode($quote);
 
         // INTELIPOST QUOTE
-        $response = $this->intelipostRequest($api_url, $api_key, "/quote", $request);
-
+        $responseBody = $this->intelipostRequest($api_url, $api_key, "/quote", $request);
+        $response = json_decode($responseBody);
         $result = Mage::getModel('shipping/rate_result');
 
         foreach ($response->content->delivery_options as $deliveryOption) { 
             $method = Mage::getModel('shipping/rate_result_method'); 
- 
+            $method_deadline = $this->formatDeadline((int)$deliveryOption->delivery_estimate_business_days);
+			$method_description = $deliveryOption->description." ".$method_deadline;
             $method->setCarrier     ('intelipost'); 
             $method->setCarrierTitle('Intelipost'); 
             $method->setMethod      ($deliveryOption->description); 
-            $method->setMethodTitle ($deliveryOption->description); 
+            $method->setMethodTitle ($method_description); 
             $method->setPrice       ($deliveryOption->final_shipping_cost); 
             $method->setCost        ($deliveryOption->provider_shipping_cost); 
 
