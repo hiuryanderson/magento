@@ -15,6 +15,10 @@ Up-to-date documentation at: https://docs.intelipost.com.br
 
 Releases
 --------------------
+## 1.0.0.1
+- Merge with magento connect version
+- Update the package
+
 ## 0.8.4.1
 - Added estimated delivery time
 - Bug fix for quoting
