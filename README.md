@@ -15,6 +15,10 @@ Up-to-date documentation at: https://docs.intelipost.com.br
 
 Releases
 --------------------
+## 0.8.4.1
+- Added estimated delivery time
+- Bug fix for quoting
+
 ## 0.8.4
 *2014-04-04 |Pablo del Vecchio*
 
