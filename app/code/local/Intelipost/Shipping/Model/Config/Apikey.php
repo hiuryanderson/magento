@@ -64,11 +64,12 @@ class Intelipost_Shipping_Model_Config_Apikey
      */
     private function intelipostRequest($api_url, $api_key, $entity_action, $request=false)
     {
+		$mgversion = Mage::getEdition()." ".Mage::getVersion();
         $s = curl_init();
 
         curl_setopt($s, CURLOPT_TIMEOUT, 5000);
         curl_setopt($s, CURLOPT_URL, $api_url.$entity_action);
-        curl_setopt($s, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Accept: application/json", "api_key: $api_key"));
+        curl_setopt($s, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Accept: application/json", "api_key: $api_key", "platform: $mgversion", "plugin: 1.1.0"));
         curl_setopt($s, CURLOPT_POST, true);
         curl_setopt($s, CURLOPT_ENCODING , "");
         curl_setopt($s, CURLOPT_RETURNTRANSFER, 1);
