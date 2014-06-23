@@ -125,7 +125,6 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
 				
 				$custom_title = $this->getConfigData('customizetitle'); // new way of creating shipping labels point 3
 				$method_description = sprintf($custom_title, $deliveryOption->description, (int)$deliveryOption->delivery_estimate_business_days); // new way of creating shipping labels point 3
-				
 				$method->setCarrier     ('intelipost'); 
 				$method->setCarrierTitle($this->getConfigData('title')); 
 				$method->setMethod      ($deliveryOption->description); 
