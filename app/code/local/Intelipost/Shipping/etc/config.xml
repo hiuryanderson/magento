@@ -3,7 +3,7 @@
 <config>
   <modules>
     <Intelipost_Shipping>
-      <version>0.0.1</version>
+      <version>1.1.0</version>
     </Intelipost_Shipping>
   </modules>
 
@@ -13,6 +13,12 @@
         <class>Intelipost_Shipping_Model</class>
       </intelipost_shipping>
     </models>
+	
+	<blocks>
+		<intelipost>
+			<class>Intelipost_Shipping_Block</class>
+		</intelipost>
+	</blocks>
 
     <helpers>
       <intelipost>
@@ -69,11 +75,20 @@
   <default>
     <carriers>
       <intelipost>
+
         <active>1</active>
         <model>intelipost_shipping/carrier_intelipost</model>
         <name>Intelipost</name>
         <title>Intelipost</title>
         <notification>1</notification>
+		
+		<altura_padrao>2</altura_padrao>
+		<comprimento_padrao>16</comprimento_padrao>
+		<largura_padrao>11</largura_padrao>
+
+		<customizetitle>%s - days to deliver: %d</customizetitle>
+		<table_name>esedex.sp</table_name>
+
       </intelipost>
     </carriers>
   </default>

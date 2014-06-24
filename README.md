@@ -15,6 +15,13 @@ Up-to-date documentation at: https://docs.intelipost.com.br
 
 Releases
 --------------------
+## 1.1.0
+- Able to edit delivery estimated time text
+- Volume dimensions default values
+- API credentials validation
+- Backup tables
+
+
 ## 1.0.0.1
 - Merge with magento connect version
 - Update the package

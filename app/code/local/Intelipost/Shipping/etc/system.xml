@@ -22,7 +22,14 @@
               <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
             </active>
-
+            <title translate="label">
+              <label>Carrier Name</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>2</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </title>
             <!--
             <account translate="label">
               <label>User Account</label>
@@ -55,7 +62,7 @@
               <frontend_type>text</frontend_type>
               <backend_model>intelipost_shipping/config_apiurl</backend_model>
               <validate>required-entry</validate>
-              <sort_order>2</sort_order>
+              <sort_order>3</sort_order>
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
@@ -66,7 +73,7 @@
               <frontend_type>text</frontend_type>
               <backend_model>intelipost_shipping/config_apikey</backend_model>
               <validate>required-entry</validate>
-              <sort_order>3</sort_order>
+              <sort_order>4</sort_order>
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
@@ -90,7 +97,7 @@
               <frontend_type>text</frontend_type>
               <!--<validate>validate-zip-international required-entry</validate>-->
               <validate>required-entry</validate>
-              <sort_order>4</sort_order>
+              <sort_order>5</sort_order>
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
@@ -129,6 +136,65 @@
               <show_in_store>1</show_in_store>
             </webservice_url>
             -->
+
+				<altura_padrao translate="label">
+					<label>Standard Height (cm)</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>50</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment><![CDATA[When not configured in the product will be used. <br /> Minimum of 2 cm.]]></comment>
+				</altura_padrao>
+				<comprimento_padrao translate="label">
+					<label>Standard length (cm)</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>60</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment><![CDATA[When not configured in the product will be used. <br /> Minimum of 16 cm.]]></comment>
+				</comprimento_padrao>
+				<largura_padrao translate="label">
+					<label>Standard width (cm)</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>70</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment><![CDATA[When not configured in the product will be used. <br /> Minimum of 11 cm.]]></comment>
+				</largura_padrao>
+
+				<customizetitle translate="label">
+					<label>Customize title for shipping methods</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>80</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment><![CDATA["%s" to the name of the service, for example "Courier", "%d" for the number of days.]]></comment>
+				</customizetitle>
+
+				<table_name translate="label">
+					<label>Contingency table</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>90</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment><![CDATA[Specifies which contingency table is used in a case of fallia Intelipost of the system. Following tables available: https://github.com/intelipost/fallback-tables (ex = esedex.sp price and term of e-Sedex originating SP)]]></comment>
+				</table_name>
+				
+				<import_process translate="button_label">
+					<label></label>
+					<button_label>Import Process</button_label>
+				    <frontend_type>button</frontend_type>
+				    <frontend_model>intelipost/import</frontend_model>
+				    <sort_order>100</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>
+				</import_process>
           </fields>
 
         </intelipost>

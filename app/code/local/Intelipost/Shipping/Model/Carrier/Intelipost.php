@@ -76,7 +76,9 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
         // if notification is disabled we send the request anyways (changed on version 0.0.2)
         $dimension_check = $this->getConfigData('notification');
 
-        $i=0;
+        $i = 0;
+		$total_weight = 0;
+
         foreach ($item_list as $item) {
             $product = $item->getProduct();
 
@@ -84,11 +86,15 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
             $volume->volume_type = 'BOX';
 
             if (!$this->isDimensionSet($product)) {
-                Mage::log('Product does not have dimensions set', null, 'intelipost.log', true);
+                //Mage::log('Product does not have dimensions set', null, 'intelipost.log', true);
+				
+				$volume->width = $this->getConfigData('largura_padrao'); // putting default config values here if product width is empty
+                $volume->height = $this->getConfigData('altura_padrao'); // putting default config values here if product height is empty
+                $volume->length = $this->getConfigData('comprimento_padrao'); // putting default config values here if product length is empty
 
                 if ($dimension_check) {
                     $this->notifyProductsDimension($item_list);
-                    return false;
+                    //return false;
                 }
             } else {
                 $volume->width = $product->getVolumeLargura();
@@ -97,31 +103,114 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
             }
 
             $volume->weight = number_format(floatval($item->getWeight()), 2, ',', '') * $item->getQty();
+			$total_weight += number_format(floatval($item->getWeight()), 2, ',', '') * $item->getQty();
             $volume->cost_of_goods = number_format(floatval($item->getPrice()), 2, ',', '') * $item->getQty();
 
             array_push($quote->volumes, $volume);
         }
-
-        $request = json_encode($quote);
+        
+		$request = json_encode($quote);
 
         // INTELIPOST QUOTE
         $responseBody = $this->intelipostRequest($api_url, $api_key, "/quote", $request);
         $response = json_decode($responseBody);
         $result = Mage::getModel('shipping/rate_result');
 
-        foreach ($response->content->delivery_options as $deliveryOption) { 
-            $method = Mage::getModel('shipping/rate_result_method'); 
-            $method_deadline = $this->formatDeadline((int)$deliveryOption->delivery_estimate_business_days);
-			$method_description = $deliveryOption->description." ".$method_deadline;
-            $method->setCarrier     ('intelipost'); 
-            $method->setCarrierTitle('Intelipost'); 
-            $method->setMethod      ($deliveryOption->description); 
-            $method->setMethodTitle ($method_description); 
-            $method->setPrice       ($deliveryOption->final_shipping_cost); 
-            $method->setCost        ($deliveryOption->provider_shipping_cost); 
+		if($response->content->delivery_options) { // if api responds fine
+			foreach ($response->content->delivery_options as $deliveryOption) { 
+				$method = Mage::getModel('shipping/rate_result_method'); 
+				
+				//$method_deadline = $this->formatDeadline((int)$deliveryOption->delivery_estimate_business_days);
+				//$method_description = $deliveryOption->description." ".$method_deadline;
+				
+				$custom_title = $this->getConfigData('customizetitle'); // new way of creating shipping labels point 3
+				$method_description = sprintf($custom_title, $deliveryOption->description, (int)$deliveryOption->delivery_estimate_business_days); // new way of creating shipping labels point 3
+				$method->setCarrier     ('intelipost'); 
+				$method->setCarrierTitle($this->getConfigData('title')); 
+				$method->setMethod      ($deliveryOption->description); 
+				$method->setMethodTitle ($method_description); 
+				$method->setPrice       ($deliveryOption->final_shipping_cost); 
+				$method->setCost        ($deliveryOption->provider_shipping_cost); 
 
-            $result->append($method); 
-        } 
+				$result->append($method); 
+			}
+		}else{ // else if API call fails or reponse in more then 3 seconds
+			
+			$shipping_price = ''; // defining shipping price
+			$number_of_days = ''; // defining number_of_days to deliver
+
+			$root_dir_path = Mage::getBaseDir();
+			$media_dir_path = $root_dir_path.DIRECTORY_SEPARATOR.'media';
+
+			$intelipost_dir_path = $media_dir_path.DIRECTORY_SEPARATOR.'intelipost';
+			$filepath = $intelipost_dir_path.DIRECTORY_SEPARATOR."state_codification.json";
+			
+			if (file_exists($filepath)) { // check if file exists locally
+				
+				$c_state = ''; $c_type = ''; // defining empty variables for state and type
+
+				$intZipCode = (int)$destinationZipCode; // Transform ZIP code from string => numeric
+
+				$c_weight = $total_weight*1000; // converting total weight of quote into grams
+
+				$state_codification = json_decode(file_get_contents($filepath)); // load state_codification.json as array
+				
+				$intArray = array(); // Defining a new array for integer values
+				foreach($state_codification[0] as $key => $value) {
+					$intArray[(int)$key] = $value; // Transform keys of array from string => numeric
+				}
+				asort($intArray); // Sort the keys of the array ascending
+				
+				foreach($intArray as $key => $value) {
+					if(($intZipCode > $key) && ($intZipCode < (int)$value->cep_end)) {
+						$c_state = trim($value->state); // assigning value of state here if found
+						$c_type = ucfirst(strtolower($value->type)); // assigning value of type here if found
+						break;
+					}
+				}
+
+				if($c_state != '' && $c_type != '') { // if state and type are found
+					
+					$filepath = $intelipost_dir_path.DIRECTORY_SEPARATOR."esedex.sp.json";
+					if (file_exists($filepath)) { // check if file exists locally
+						$esedex = json_decode(file_get_contents($filepath)); // Load configured backup table: e.g. esedex.sp.json
+						
+						$number_of_days = $esedex->$c_state->$c_type->delivery_estimate_business_days;
+						foreach($esedex->$c_state->$c_type->final_shipping_cost as $key => $value) {
+							if(($key > $c_weight) && !isset($last_v)) {
+								$shipping_price = $value;
+								break;
+							}
+
+							if($key > $c_weight) {
+								$shipping_price = $last_v;
+								break;
+							}
+
+							$last_k = $key; // saving -1 key
+							$last_v = $value; // saving value for -1 key
+						}
+					}
+
+				}
+
+			}
+			if($shipping_price != '' && $number_of_days != '') {
+				$method = Mage::getModel('shipping/rate_result_method'); 
+				
+				$custom_title = $this->getConfigData('customizetitle'); // new way of creating shipping labels point 3
+				$method_description = sprintf($custom_title, "Entrega", (int)$number_of_days); // new way of creating shipping labels point 3
+				
+				$method->setCarrier     ('intelipost'); 
+				$method->setCarrierTitle('Intelipost'); 
+				$method->setMethod      ("Entrega"); 
+				$method->setMethodTitle ($method_description); 
+				$method->setPrice       ($shipping_price); 
+				$method->setCost        ($shipping_price); 
+
+				$result->append($method);
+			}
+		}
 
         return $result;
     }
@@ -220,11 +309,12 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
      */
     private function intelipostRequest($api_url, $api_key, $entity_action, $request=false)
     {
+		$mgversion = Mage::getEdition()." ".Mage::getVersion();
         $s = curl_init();
 
-        curl_setopt($s, CURLOPT_TIMEOUT, 5000);
+        curl_setopt($s, CURLOPT_TIMEOUT, 3); // maximum time allowed to call API is 3 seconds
         curl_setopt($s, CURLOPT_URL, $api_url.$entity_action);
-        curl_setopt($s, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Accept: application/json", "api_key: $api_key"));
+        curl_setopt($s, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Accept: application/json", "api_key: $api_key", "platform: Magento $mgversion", "plugin: 1.1.0"));
         curl_setopt($s, CURLOPT_POST, true);
         curl_setopt($s, CURLOPT_ENCODING , "");
         curl_setopt($s, CURLOPT_RETURNTRANSFER, 1);

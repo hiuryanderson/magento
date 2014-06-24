@@ -1,31 +1,43 @@
-"User Account","Usuário"
-"Postal Code","CEP"
-"Choose the best fitting category for your products","Escolha a melhor categoria para os seus produtos"
-"Enable notification","Habilitar notificações"
-"Enable notification and dimension check","Habilitar notificações e validação de dimensões"
-"Enable dimension check and notifications","Habilitar validação de dimensões e notificações"
-"Alcoholic","Bebidas"
-"Beverages","Líquidos Diversos"
-"Books and/or graphical material","Livros ou Materiais gráficos"
-"Clothing","Roupas e vestuários"
-"Cosmetics","Cosméticos"
-"Documents","Documentos"
-"Eletronics","Eletrônicos e informática"
-"Floriculture","Floricultura"
-"Food","Alimentos"
-"Fragile products","Produto Frágil"
-"High value products","Objetos de alto valor"
-"Machinery and/or parts","Máquinas ou Peças em geral"
-"Office supplies and furniture","Móveis ou Objetos de escritório"
-"Pharmacy","Produto Farmacêutico"
-"Toys","Brinquedos"
-"The following products do not have dimension set:","Os seguintes produtos não tem as dimensões definidas:"
-"<small>Disable these notifications in System > Settings > Carriers > Intelipost</small>","<small>Desabilite as notifações em Sistema > Configuração > Métodos de envio > Intelipost</small>"
-"Product missing dimensions","Produto sem dimensões"
-"(same day)","(mesmo dia)"
-"(1 day)","(1 dia útil)"
-"(On acknowledgment)","(Sob consulta)"
-"(%s days)","(%s dias úteis)"
-"User account has the wrong size!","Usuário/Senha não número certo de caracteres!"
-"Invalid username or password!","Usuário e/ou senha inválidos!"
-"Could not validate username and password!","Erro ao validar usuário e senha"
+User Account,Usuário
+Postal Code,CEP
+Choose the best fitting category for your products,Escolha a melhor categoria para os seus produtos
+Enable notification,Habilitar notificações
+Enable notification and dimension check,Habilitar notificações e validação de dimensões
+Enable dimension check and notifications,Habilitar validação de dimensões e notificações
+Alcoholic,Bebidas
+Beverages,Líquidos Diversos
+Books and/or graphical material,Livros ou Materiais gráficos
+Clothing,Roupas e vestuários
+Cosmetics,Cosméticos
+Documents,Documentos
+Eletronics,Eletrônicos e informática
+Floriculture,Floricultura
+Food,Alimentos
+Fragile products,Produto Frágil
+High value products,Objetos de alto valor
+Machinery and/or parts,Máquinas ou Peças em geral
+Office supplies and furniture,Móveis ou Objetos de escritório
+Pharmacy,Produto Farmacêutico
+Toys,Brinquedos
+The following products do not have dimension set:,Os seguintes produtos não tem as dimensões definidas:
+<small>Disable these notifications in System > Settings > Carriers > Intelipost</small>,<small>Desabilite as notifações em Sistema > Configuração > Métodos de envio > Intelipost</small>
+Product missing dimensions,Produto sem dimensões
+(same day),(mesmo dia)
+(1 day),(1 dia útil)
+(On acknowledgment),(Sob consulta)
+(%s days),(%s dias úteis)
+User account has the wrong size!,Usuário/Senha não número certo de caracteres!
+Invalid username or password!,Usuário e/ou senha inválidos!
+Could not validate username and password!,Erro ao validar usuário e senha
+Standard Height (cm),Altura Padr&atilde;o (cm)
+When not configured in the product will be used. <br /> Minimum of 2 cm.,Quando n&atilde;o configurada no produto ser&aacute; usada.<br />M&iacute;nimo de 2 cm.
+Standard length (cm),Comprimento Padr&atilde;o (cm)
+When not configured in the product will be used. <br /> Minimum of 16 cm.,Quando n&atilde;o configurada no produto ser&aacute; usada.<br />M&iacute;nimo de 16 cm.
+Standard width (cm),Largura Padr&atilde;o (cm)
+When not configured in the product will be used. <br /> Minimum of 11 cm.,Quando n&atilde;o configurada no produto ser&aacute; usada.<br />M&iacute;nimo de 11 cm.
+Customize title for shipping methods,Mensagem que Exibe o Prazo de Entrega
+"""%s"" to the name of the service, for example ""Courier"", ""%d"" for the number of days.","""%s"" para o nome do serviço, por exemplo ""Sedex"", ""%d"" para o n&uacute;mero de dias."
+Contingency table,Tabela de conting&ecirc;ncia
+Specifies which contingency table is used in a case of fallia Intelipost of the system. Following tables available: https://github.com/intelipost/fallback-tables (ex = esedex.sp price and term of e-Sedex originating SP),Especifica qual tabela de conting&ecirc;ncia ser&aacute; usada num caso de fallia do sistema da Intelipost. Segue as tabelas dispon&iacute;veis: https://github.com/intelipost/fallback-tables (e.x. esedex.sp = preço e prazo de e-Sedex com origem SP)
+Import Process,Processo de importa&ccedil;&atilde;o
+Carrier Name,Nome do método de entrega
