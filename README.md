@@ -10,9 +10,7 @@ Compatible with Magento CE 1.6, 1.7 & 1.8
 
 Installation
 --------------------
-Installation can be done via Magento Connect (http://www.magentocommerce.com/magento-connect/intelipost.html) or by directly inserting the Magento plugin. Find an installation guide in Portuguese. 
-
-
+Installation can be done via Magento Connect (http://www.magentocommerce.com/magento-connect/intelipost.html) or by directly inserting the Magento plugin. This folder contains an installation guide in Portuguese (https://github.com/intelipost/magento/blob/master/Installation%20Guide.pdf?raw=true). 
 
 
 Documentation
