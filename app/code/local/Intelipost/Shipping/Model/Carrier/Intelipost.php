@@ -102,8 +102,8 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
                 $volume->length = $product->getVolumeComprimento();
             }
 
-            $volume->weight = number_format(floatval($item->getWeight()), 2, ',', '') * $item->getQty();
-			$total_weight += number_format(floatval($item->getWeight()), 2, ',', '') * $item->getQty();
+            $volume->weight = $weight;
+	    $total_weight += number_format(floatval($item->getWeight()), 2, ',', '') * $item->getQty();
             $volume->cost_of_goods = number_format(floatval($item->getPrice()), 2, ',', '') * $item->getQty();
 
             array_push($quote->volumes, $volume);
