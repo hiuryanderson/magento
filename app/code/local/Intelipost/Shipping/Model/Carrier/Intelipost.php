@@ -88,14 +88,14 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
             if (!$this->isDimensionSet($product)) {
                 //Mage::log('Product does not have dimensions set', null, 'intelipost.log', true);
 				
-				$volume->width = $this->getConfigData('largura_padrao'); // putting default config values here if product width is empty
+		$volume->width = $this->getConfigData('largura_padrao'); // putting default config values here if product width is empty
                 $volume->height = $this->getConfigData('altura_padrao'); // putting default config values here if product height is empty
                 $volume->length = $this->getConfigData('comprimento_padrao'); // putting default config values here if product length is empty
 
-                if ($dimension_check) {
-                    $this->notifyProductsDimension($item_list);
+                //if ($dimension_check) {
+                //    $this->notifyProductsDimension($item_list);
                     //return false;
-                }
+                //}
             } else {
                 $volume->width = $product->getVolumeLargura();
                 $volume->height = $product->getVolumeAltura();
