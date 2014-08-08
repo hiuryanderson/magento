@@ -18,7 +18,7 @@ Guia para a instalação da extensão Intelipost para Magento
 4.3.	Shipping Methods
 4.4.	Intelipost Shipping
 
- [![documentation](https://cloud.githubusercontent.com/assets/7913922/3859725/f59f522a-1f1b-11e4-8731-cf9359eb50fc.png)
+ ![documentation](https://cloud.githubusercontent.com/assets/7913922/3859725/f59f522a-1f1b-11e4-8731-cf9359eb50fc.png)
 
 4.5.	Se a api_url e api_key estão OK, ao salvar, uma call en /quote de teste será executada.
 4.6.	Em /var/log/intelipost.log veremos os registros de request/response.
