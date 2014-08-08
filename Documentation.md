@@ -1,4 +1,4 @@
-Guia para a instalação da extensão Intelipost para Magento
+# Guia para a instalação da extensão Intelipost para Magento
 
 
 
