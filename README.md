@@ -5,7 +5,7 @@ Intelipost is a simple, fast and secure shipping and logistics gateway API. You 
 
 Compatibility
 --------------------
-Compatible with Magento CE 1.6, 1.7 & 1.8
+Compatible with Magento CE 1.5, 1.6, 1.7, 1.8, 1.9
 
 
 Installation
