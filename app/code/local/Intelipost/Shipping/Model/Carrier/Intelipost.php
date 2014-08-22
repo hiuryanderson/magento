@@ -79,37 +79,53 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
         $i = 0;
 		$total_weight = 0;
 
-        foreach ($item_list as $item) {
-            $product = $item->getProduct();
+        // Volume calculation for a package
+        foreach ( $request->getAllItems() as $item) {
 
-            $volume = new Intelipost_Model_Request_Volume();
-            $volume->volume_type = 'BOX';
+              $product = $item->getProduct();
+              if($product->isConfigurable()== true){
+              //$teste=$product->isConfigurable();
+              //Mage::log('configuravel: '.$product->isConfigurable() , null, 'intelipost.log', true);
+              continue;
+              }
+              $prod_width= $item->getProduct()->getVolumeLargura();
+              $prod_length= $item->getProduct()->getVolumeComprimento();
+              $prod_height= $item->getProduct()->getVolumeAltura();
 
-            if (!$this->isDimensionSet($product)) {
-                //Mage::log('Product does not have dimensions set', null, 'intelipost.log', true);
-				
-		$volume->width = $this->getConfigData('largura_padrao'); // putting default config values here if product width is empty
-                $volume->height = $this->getConfigData('altura_padrao'); // putting default config values here if product height is empty
-                $volume->length = $this->getConfigData('comprimento_padrao'); // putting default config values here if product length is empty
 
-                //if ($dimension_check) {
-                //    $this->notifyProductsDimension($item_list);
-                    //return false;
-                //}
+            $total_volume += $prod_width * $prod_length * $prod_height *  $item->getQty();
+            //Mage::log('volume: '.$total_volume , null, 'intelipost.log', true);
+            //Mage::log('volume: '.$volumecubic , null, 'intelipost.log', true);
+            //$volume->weight = number_format(floatval($item->getWeight()), 2, ',', '') * $item->getQty();
+        }
+
+           if ($total_volume ==0 ) {
+            //   Mage::log('Product does not have dimensions set', null, 'intelipost.log', true);
+
+                $pack_width = $this->getConfigData('largura_padrao'); // putting default config values here if product width is empty
+                $pack_height = $this->getConfigData('altura_padrao'); // putting default config values here if product height is empty
+                $pack_length = $this->getConfigData('comprimento_padrao'); // putting default config values here if product length is empty
+
+
             } else {
-                $volume->width = $product->getVolumeLargura();
-                $volume->height = $product->getVolumeAltura();
-                $volume->length = $product->getVolumeComprimento();
+                $volume_bycubic = pow($total_volume, 1/3);
+                $volume_bycubic = number_format($volume_bycubic, 2, '.', '');
+                //Mage::log('volume: '.$volume_bycubic , null, 'intelipost.log', true);
+                $pack_width = $volume_bycubic;
+                $pack_height = $volume_bycubic;
+                $pack_length = $volume_bycubic;
             }
 
-            $volume->weight = $weight;
-	    $total_weight += number_format(floatval($item->getWeight()), 2, ',', '') * $item->getQty();
-            $volume->cost_of_goods = number_format(floatval($item->getPrice()), 2, ',', '') * $item->getQty();
 
-            array_push($quote->volumes, $volume);
-        }
-        
-		$request = json_encode($quote);
+        $volume = new Intelipost_Model_Request_Volume();
+        $volume->volume_type = 'BOX';
+        $volume->weight = $weight;
+        $volume->width = $pack_width;
+        $volume->height = $pack_height;
+        $volume->length = $pack_length;
+        $volume->cost_of_goods = floatval($price);
+        array_push($quote->volumes, $volume);
+        $request = json_encode($quote);
 
         // INTELIPOST QUOTE
         $responseBody = $this->intelipostRequest($api_url, $api_key, "/quote", $request);
