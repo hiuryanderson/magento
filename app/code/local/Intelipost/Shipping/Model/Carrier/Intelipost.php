@@ -132,7 +132,7 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
         $response = json_decode($responseBody);
         $result = Mage::getModel('shipping/rate_result');
 
-		if($response->content->delivery_options) { // if api responds fine
+		if($response->status == "OK") { // if api responds fine and not an error
 			foreach ($response->content->delivery_options as $deliveryOption) { 
 				$method = Mage::getModel('shipping/rate_result_method'); 
 				
