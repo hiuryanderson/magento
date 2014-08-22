@@ -20,6 +20,9 @@ Up-to-date documentation at: https://docs.intelipost.com.br
 
 Releases
 --------------------
+## 1.1.0.3
+-Weight calculation correction and Volume calculation. Now is used one box
+
 ## 1.1.0
 - Able to edit delivery estimated time text
 - Volume dimensions default values
