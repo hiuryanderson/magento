@@ -29,8 +29,17 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
         $destinationZipCode = $request->getDestPostcode();
 
         if (!preg_match($this->_zipCodeRegex, $originZipCode) || !preg_match($this->_zipCodeRegex, $destinationZipCode)) {
-            Mage::log('Invalid zip code ' . $originZipCode . ' or ' . $destinationZipCode, null, 'intelipost.log', true);
-            return false;
+		$error = Mage::getModel('shipping/rate_result_error');
+		
+		$error->setCarrier('intelipost')
+			->setCarrierTitle('intelipost')
+			->setErrorMessage('CEP Inválido! Por favor, digite o CEP corretamente.');
+	
+		$result->append($error);
+	
+	        Mage::log('Invalid zip code ' . $originZipCode . ' or ' . $destinationZipCode, null, 'intelipost.log', true);
+	
+		return $result;
         }
 
         // only numbers allowed
