@@ -325,7 +325,23 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
      */
     private function intelipostRequest($api_url, $api_key, $entity_action, $request=false)
     {
-		$mgversion = Mage::getEdition()." ".Mage::getVersion();
+	$IntelipostCache = Mage::getSingleton('checkout/session')->getIntelipostCache();
+	if(!$IntelipostCache) {
+		$IntelipostCache = array();
+	} else {
+	        try {
+	            $time = time();
+	            if($this->getConfigFlag('cache')
+	                    && array_key_exists($request, $IntelipostCache)
+	                    && $time - $IntelipostCache[$request]['timestamp'] < 3600) {
+	                return $IntelipostCache[$request]['response'];
+	            }
+	        } catch (Exception $e) {
+	            mage::logException($e);
+	        }
+	}
+	
+	$mgversion = Mage::getEdition()." ".Mage::getVersion();
         $s = curl_init();
 
         curl_setopt($s, CURLOPT_TIMEOUT, 3); // maximum time allowed to call API is 3 seconds
@@ -339,6 +355,11 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
         $response = curl_exec($s);
 
         curl_close($s);
+
+	if(is_array($IntelipostCache)){
+		$IntelipostCache[$request] = array('response'=>$response,'timestamp'=>time());
+		Mage::getSingleton('checkout/session')->setIntelipostCache($IntelipostCache);
+	}
 
         return $response;
     }
