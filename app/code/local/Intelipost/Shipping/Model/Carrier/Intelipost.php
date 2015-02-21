@@ -159,6 +159,21 @@ class Intelipost_Shipping_Model_Carrier_Intelipost
 
 				$result->append($method); 
 			}
+		} else if($response->status == "ERROR") { // else if API return ERRO
+			foreach ($response->messages as $ErrorMessage) { 
+				$ErrorEND = $ErrorMessage->text;
+				Mage::log('ERROR:' . $ErrorEND, null, 'intelipost.log', true);
+				
+				$error = Mage::getModel('shipping/rate_result_error');
+				$ErrorMessage = json_decode($ErrorEND->text);
+				$error->setCarrier('intelipost')
+					->setCarrierTitle('intelipost')
+					->setErrorMessage($ErrorEND);
+
+				$result->append($error);
+			}
+			return $result;
+			
 		}else{ // else if API call fails or reponse in more then 3 seconds
 			
 			$shipping_price = ''; // defining shipping price
